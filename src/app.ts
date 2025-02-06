@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 
 
 app.use("/api/v1/auth", authRouter)
-app.use("/api/v1/admin", authRouter)
+app.use("/api/v1/admin", adminRouter)
 
 // simulating RBAC on  routes
 
