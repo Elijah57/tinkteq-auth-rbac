@@ -25,7 +25,7 @@ export const login = asyncHandler(async (req: Request, res: Response, next: Next
     const accessToken = generateAcessToken(payload)
     const refreshToken = generateRefreshToken(payload)
 
-    res.cookie("refreshToken", refreshToken, {
+    res.status(200).cookie("refreshToken", refreshToken, {
         httpOnly: true,
         secure: configs.env === "PROD",
         maxAge: 7 * 24 * 60 * 60 * 1000
