@@ -1,5 +1,6 @@
 import express, {Express} from "express";
 import cors from "cors"
+import cookieParser from 'cookie-parser';
 import { isAdmin, isLoggedIn, isShipper, isCarrier, hasRole } from "./middlewares/authMiddleware";
 import { authRouter, adminRouter} from "./routes";
 import { routeNotFound, errorHandler } from "./middlewares/errorMiddleware";
@@ -7,6 +8,7 @@ import { routeNotFound, errorHandler } from "./middlewares/errorMiddleware";
 export const app: Express = express()
 
 app.use(cors())
+app.use(cookieParser());
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 
