@@ -1,7 +1,7 @@
 import express, {Express} from "express";
 import cors from "cors"
 import { isAdmin, isLoggedIn, isShipper, isCarrier, hasRole } from "./middlewares/authMiddleware";
-import authRouter from "./routes/auth";
+import { authRouter, adminRouter} from "./routes";
 import { routeNotFound, errorHandler } from "./middlewares/errorMiddleware";
 
 export const app: Express = express()
@@ -12,6 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 
 
 app.use("/api/v1/auth", authRouter)
+app.use("/api/v1/admin", authRouter)
 
 // simulating RBAC on  routes
 
