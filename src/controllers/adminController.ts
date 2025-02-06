@@ -6,7 +6,7 @@ import { ResourceNotFound } from "../middlewares/errorMiddleware";
 
 
 export const getAllUsers = asyncHandler(async (req:Request, res: Response, next: NextFunction)=>{
-    const users = await User.find()
+    const users = await User.find().select('firstname lastname phone email role verified')
     if(!users) return next( new ResourceNotFound("No user found"))
     return res.status(200).json({
         status: true,

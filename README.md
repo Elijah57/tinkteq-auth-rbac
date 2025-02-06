@@ -126,6 +126,7 @@ The app should now be running at `http://localhost:5000`.
       "_id": "user-id",
       "firstname": "John",
       "lastname": "Doe",
+      "phone": "+234123456",
       "email": "user@example.com",
       "role": "admin"
     },
@@ -133,23 +134,8 @@ The app should now be running at `http://localhost:5000`.
   ]
   ```
 
-### 5. **GET /user/:id**
 
-- **Description**: Retrieves a specific user's details by their `id` (accessible by the user themselves or an admin).
-- **Authorization**: Requires a valid access token.
-- **Response**:
-  ```json
-  {
-    "_id": "user-id",
-    "firstname": "John",
-    "lastname": "Doe",
-    "phone": "+234123456",
-    "email": "user@example.com",
-    "role": "admin"
-  }
-  ```
-
-### 6. **Middleware**
+### 5. **Middleware**
 
 - **isAdmin**: Ensures the user is an admin before proceeding with the next middleware or route.
 - **isCarrier**: Ensures the user is a carrier before proceeding with the next middleware or route.
