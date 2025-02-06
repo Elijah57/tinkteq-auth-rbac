@@ -2,10 +2,11 @@ import { Request, Response, NextFunction } from "express";
 import asyncHandler from "../utils/asyncHandler";
 import { generateAcessToken, generateRefreshToken } from "../utils";
 import User from "../models/userModel";
-import { BadRequest, Conflict, ResourceNotFound } from "../middlewares/errorMiddleware";
+import { BadRequest, Conflict, ResourceNotFound, UnAuthorized } from "../middlewares/errorMiddleware";
 import { comparePassword } from "../utils";
 import { IAuthPayload } from "../types";
 import { configs } from "../configs/config";
+import jwt from "jsonwebtoken";
 
 
 export const login = asyncHandler(async (req: Request, res: Response, next: NextFunction)=>{
@@ -66,5 +67,20 @@ export const logout = asyncHandler(async (req: Request, res: Response, next: Nex
     }).json({
         status: true,
         message: "Logged out successfully"
+    })
+})
+
+export const refreshToken = asyncHandler(async (req: Request, res: Response, next: NextFunction)=>{
+    const refreshToken = req.cookies.refreshToken;
+    if(!refreshToken) return next(new UnAuthorized("Refresh token not found, Please login to continue"))
+    
+    const decode = jwt.verify(refreshToken, configs.jwtRefreshSecret) as IAuthPayload
+    const user = await User.findById(decode.userId)
+    if(!user) return next(new ResourceNotFound("User not found"))
+    
+    const newAccessToken = generateAcessToken({userId: user._id, role: user.role})
+    res.json({
+        status: true,
+        accessToken: newAccessToken
     })
 })
