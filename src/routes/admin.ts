@@ -3,7 +3,7 @@ import { getAllUsers } from "../controllers/adminController";
 
 const adminRouter = Router();
 
-adminRouter.post("/users", getAllUsers);
+adminRouter.get("/users", getAllUsers);
 
 
 export default adminRouter
